@@ -24,6 +24,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
+    @GetMapping(value = "/helloworld")
+    public String helloWorld(@RequestParam("id") String id, @RequestParam("name") String name) throws IOException {
+        return "OK!";
+    }
+
+
     @GetMapping(value = "/baixarPdf")
     public ResponseEntity<Resource> baixarPdf(@RequestParam("id") String id, @RequestParam("name") String name) throws IOException {
 
