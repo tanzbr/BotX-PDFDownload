@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Globaltec {
 
@@ -18,6 +20,11 @@ public class Globaltec {
     private static String sessionToken = "";
     private static String devToken = dotenv.get("GLOBALTEC_DEV_TOKEN");
     private static String body = dotenv.get("GLOBALTEC_BODY_AUTENTICAR");
+
+    public Globaltec() {
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        executor.scheduleAtFixedRate(() -> autenticarApi(), 0, 5, TimeUnit.MINUTES);
+    }
 
     // autenticar api globaltec
     public static void autenticarApi() {
@@ -38,12 +45,15 @@ public class Globaltec {
                     content.append(inputLine);
                 }
                 in.close();
+                System.out.println("Autenticado com sucesso.");
                 sessionToken = content.toString().replaceAll("\"", "");
             } else {
+                System.out.println("Erro ao autenticar API.");
                 sessionToken = "error";
             }
             con.disconnect();
         } catch (IOException e) {
+            System.out.println("Erro ao autenticar API.");
             e.printStackTrace();
         }
     }
@@ -61,7 +71,6 @@ public class Globaltec {
 
 
     public static String getBoletoBase64(String codBanco, String seuNumero) throws IOException {
-        autenticarApi();
         if (sessionToken.equals("error")) {
             System.out.println("Erro ao autenticar.");
             return "Erro ao autenticar";
@@ -106,7 +115,6 @@ public class Globaltec {
         }
         return "Erro";
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 package dev.caua.botxapipdf.api;
 
-import dev.caua.botxapipdf.globaltec.Globaltec;
+import dev.caua.botxapipdf.BotxApiPdfApplication;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.springframework.core.io.InputStreamResource;
@@ -35,13 +35,12 @@ public class ApiController {
 
         String[] idFormated = id.split("-");
 
-        String content = Globaltec.getBoletoBase64(idFormated[0], idFormated[1]);;
+        String content = BotxApiPdfApplication.getGlobaltec().getBoletoBase64(idFormated[0], idFormated[1]);;
 
         if (content.equalsIgnoreCase("Erro ao autenticar") || content.equals("Erro")) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        System.out.println(content);
         byte[] decoder = Base64.getDecoder().decode(content);
         InputStream is = new ByteArrayInputStream(decoder);
         InputStreamResource resource = new InputStreamResource(is);
@@ -52,6 +51,7 @@ public class ApiController {
         ContentDisposition disposition = ContentDisposition.attachment().filename(name+".pdf").build();
         headers.setContentDisposition(disposition);
 
+        System.out.println("Enviando PDF.");
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
@@ -62,7 +62,7 @@ public class ApiController {
 
         ArrayList<String> listaIds2 = new ArrayList<>(Arrays.asList(listaIds));
 
-        ArrayList<String> pdfsBase64 = Globaltec.getBoletosPdf(listaIds2);
+        ArrayList<String> pdfsBase64 = BotxApiPdfApplication.getGlobaltec().getBoletosPdf(listaIds2);
 
         List<InputStream> inputsPdfs = new ArrayList<>();
 
@@ -89,6 +89,7 @@ public class ApiController {
         InputStream is = new ByteArrayInputStream(colDocOutputstream.toByteArray());
         InputStreamResource resource = new InputStreamResource(is);
 
+        System.out.println("Enviando PDF.");
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
         /*
 

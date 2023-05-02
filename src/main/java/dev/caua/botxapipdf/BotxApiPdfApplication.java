@@ -1,5 +1,6 @@
 package dev.caua.botxapipdf;
 
+import dev.caua.botxapipdf.globaltec.Globaltec;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BotxApiPdfApplication {
 
 	private static Dotenv dotenv;
+	private static Globaltec globaltec;
 
 	public static void main(String[] args) {
 		// load .env variables
 		dotenv = Dotenv.load();
+		globaltec = new Globaltec();
 		SpringApplication.run(BotxApiPdfApplication.class, args);
 	}
 
@@ -19,4 +22,7 @@ public class BotxApiPdfApplication {
 		return dotenv;
 	}
 
+	public static Globaltec getGlobaltec() {
+		return globaltec;
+	}
 }
