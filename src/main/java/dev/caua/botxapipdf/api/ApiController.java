@@ -24,8 +24,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
-    @GetMapping(value = "/helloworld")
-    public String helloWorld(@RequestParam("id") String id, @RequestParam("name") String name) throws IOException {
+    @GetMapping(value = "/test")
+    public String helloWorld() throws IOException {
         return "OK!";
     }
 
