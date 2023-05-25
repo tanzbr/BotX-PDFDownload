@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+!/mvnw
+!/mvnw.cmd
+!/HELP.md
+!/out/
+!/.mvn/
+!/.idea/
+!/src/main/resources/keystore2.p12
+!/src/main/resources/application.properties
+!/src/main/resources/.env

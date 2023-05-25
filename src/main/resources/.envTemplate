@@ -1,0 +1,6 @@
+# rename this file to .env and place the informations
+API_URL=
+API_TOKEN=
+
+GLOBALTEC_DEV_TOKEN=
+GLOBALTEC_BODY_AUTENTICAR={"Login": "xxx", "Senha": "xxx", "UsuarioUAUSite": "xxx"}
